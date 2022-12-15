@@ -1,0 +1,66 @@
+micronaut:
+  application:
+    name: touragency
+    security:
+      authentication: bearer
+      token:
+        jwt:
+          signatures:
+            secret:
+              generator:
+                secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:veryVeryVeryVeryVeryVeryVerySecretWord}"'
+          generator:
+            access-token:
+              expiration: 999999999
+  server:
+    maxRequestSize: 30297879
+    multipart:
+      maxFileSize: 30297879
+    context-path: /
+    cors:
+      enabled: true
+
+endpoints:
+  health:
+    enabled: true
+    sensitive: false
+    details-visible: ANONYMOUS
+    status:
+      http-mapping:
+        UP: OK
+        UNKNOWN: OK
+        DOWN: SERVICE_UNAVAILABLE
+
+captcha:
+  ignore: false
+
+netty:
+  default:
+    allocator:
+      max-order: 3
+
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/tour_agency
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: password
+    dialect: POSTGRES
+
+mail:
+  host: localhost
+  port: 25
+  username: ''
+  password: ''
+  from: noreply@mosquiito.ru
+  text:
+    confirmation:
+      subject: "Регистрация в личном кабинете турфирмы \"Arain fly\""
+      href: 'Тут должна быть ссылка на фронт, но его пока не сделали('
+    recover:
+      subject: "Запрос на восстановление пароля от личного кабинета турфирмы \"Arain fly\""
+      href: 'Тут должна быть ссылка на фронт, но его пока не сделали('
+
+paths:
+  ftl:
+    email: src/main/resources/ftl/email
