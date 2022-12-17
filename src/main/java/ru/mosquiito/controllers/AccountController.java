@@ -10,9 +10,12 @@ import io.micronaut.security.rules.SecurityRule;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.mosquiito.dto.RecoverRequestDto;
 import ru.mosquiito.dto.RegistrationDto;
 import ru.mosquiito.dto.SimpleResponseDto;
+import ru.mosquiito.services.accountConfirmation.IAccountConfirmationService;
 import ru.mosquiito.services.auth.IRegistrationService;
+import ru.mosquiito.services.recover.IRecoverService;
 import ru.mosquiito.utils.CaptchaUtils;
 
 import javax.validation.Valid;
@@ -30,6 +33,12 @@ public class AccountController {
     @Inject
     private IRegistrationService registrationService;
 
+    @Inject
+    private IAccountConfirmationService accountConfirmationService;
+
+    @Inject
+    private IRecoverService recoverService;
+
     @Get(value = "/captcha", produces = MediaType.IMAGE_PNG)
     public MutableHttpResponse<?> captcha() throws IOException {
         return captchaUtils.captcha();
@@ -45,6 +54,30 @@ public class AccountController {
 
         return responseDto.isStatus() ?
                 SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) : //200
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST).body(responseDto.getMessage());//400
+    }
+
+    @Get("/confirm/{code}")
+    public MutableHttpResponse<?> confirm(@PathVariable String code) {
+        SimpleResponseDto responseDto = accountConfirmationService.confirm(code);
+        return responseDto.isStatus() ?
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) ://200
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.NOT_FOUND).body(responseDto.getMessage());//404
+    }
+
+    @Get("/recover/send/{email}")
+    public MutableHttpResponse<?> sendRecover(@PathVariable String email) {
+        SimpleResponseDto responseDto = recoverService.send(email);
+        return responseDto.isStatus() ?
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) ://200
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.NOT_FOUND).body(responseDto.getMessage());//404
+    }
+
+    @Post("/recover")
+    public MutableHttpResponse<?> recover(@Valid @Body RecoverRequestDto recoverRequestDto) {
+        SimpleResponseDto responseDto = recoverService.recover(recoverRequestDto);
+        return responseDto.isStatus() ?
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) ://200
                 SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST).body(responseDto.getMessage());//400
     }
 }

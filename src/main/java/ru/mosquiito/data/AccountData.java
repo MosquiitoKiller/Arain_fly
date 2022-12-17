@@ -3,9 +3,11 @@ package ru.mosquiito.data;
 import jakarta.inject.Inject;
 import ru.mosquiito.domain.Account;
 import ru.mosquiito.repositories.AccountRepository;
+import ru.mosquiito.services.accountConfirmation.AccountDataAccess;
 import ru.mosquiito.services.auth.AuthAccountDataAccess;
+import ru.mosquiito.services.recover.RecoverAccountDataAccess;
 
-public class AccountData implements AuthAccountDataAccess {
+public class AccountData implements AuthAccountDataAccess, AccountDataAccess, RecoverAccountDataAccess {
 
     @Inject
     private AccountRepository accountRepository;
@@ -18,5 +20,15 @@ public class AccountData implements AuthAccountDataAccess {
     @Override
     public Account findByEmail(String email) {
         return accountRepository.findByEmailIgnoreCase(email).orElse(null);
+    }
+
+    @Override
+    public Account findById(Integer id) {
+        return accountRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Account update(Account account) {
+        return accountRepository.update(account);
     }
 }
