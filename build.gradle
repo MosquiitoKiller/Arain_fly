@@ -59,7 +59,6 @@ configurations.implementation{
     exclude group: 'quartz', module: 'quartz'
     exclude group: 'org.springframework', module: 'spring'
     exclude group: 'commons-dbcp', module: 'commons-dbcp'
-    exclude group: 'org.slf4j', module: 'slf4j-simple'
 }
 
 

@@ -43,8 +43,8 @@ datasources:
   default:
     url: jdbc:postgresql://localhost:5432/tour_agency
     driverClassName: org.postgresql.Driver
-    username: postgres
-    password: password
+    username: tour-agency-back
+    password: ${DB_PASS}
     dialect: POSTGRES
 
 mail:
