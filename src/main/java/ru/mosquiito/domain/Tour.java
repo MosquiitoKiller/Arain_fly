@@ -19,6 +19,11 @@ public class Tour {
 
     private String name;
 
+    private Double price;
+
+    @Column(name = "free_places")
+    private Integer freePlaces;
+
     @ManyToOne
     private Hotel hotel;
 

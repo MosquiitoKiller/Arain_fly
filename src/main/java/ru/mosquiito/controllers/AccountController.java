@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller("/auth")
-@Secured((SecurityRule.IS_ANONYMOUS))
+@Secured(SecurityRule.IS_ANONYMOUS)
 public class AccountController {
 
     private final Logger log = LoggerFactory.getLogger(AccountController.class);
@@ -53,8 +53,8 @@ public class AccountController {
         SimpleResponseDto responseDto = registrationService.registration(registrationDto);
 
         return responseDto.isStatus() ?
-                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) : //200
-                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST).body(responseDto.getMessage());//400
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) ://200
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.valueOf(responseDto.getCode()), responseDto.getMessage());
     }
 
     @Get("/confirm/{code}")
@@ -62,7 +62,7 @@ public class AccountController {
         SimpleResponseDto responseDto = accountConfirmationService.confirm(code);
         return responseDto.isStatus() ?
                 SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) ://200
-                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.NOT_FOUND).body(responseDto.getMessage());//404
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.valueOf(responseDto.getCode()), responseDto.getMessage());
     }
 
     @Get("/recover/send/{email}")
@@ -70,7 +70,7 @@ public class AccountController {
         SimpleResponseDto responseDto = recoverService.send(email);
         return responseDto.isStatus() ?
                 SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) ://200
-                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.NOT_FOUND).body(responseDto.getMessage());//404
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.valueOf(responseDto.getCode()), responseDto.getMessage());
     }
 
     @Post("/recover")
@@ -78,6 +78,6 @@ public class AccountController {
         SimpleResponseDto responseDto = recoverService.recover(recoverRequestDto);
         return responseDto.isStatus() ?
                 SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.OK) ://200
-                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.BAD_REQUEST).body(responseDto.getMessage());//400
+                SimpleHttpResponseFactory.INSTANCE.status(HttpStatus.valueOf(responseDto.getCode()), responseDto.getMessage());
     }
 }

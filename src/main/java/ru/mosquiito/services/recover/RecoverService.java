@@ -32,7 +32,7 @@ public class RecoverService implements IRecoverService {
     public SimpleResponseDto send(String email) {
         Account account = recoverAccountDataAccess.findByEmail(email);
         if (account == null)
-            return new SimpleResponseDto(false, "Не найден аккаунт с почтой " + email);
+            return new SimpleResponseDto(404, "Не найден аккаунт с почтой " + email);
         AccountConfirmation accountConfirmation = createRecoverService.createRecover(account);
         account.setAccountConfirmation(accountConfirmation);
         account = recoverAccountDataAccess.update(account);
@@ -40,7 +40,7 @@ public class RecoverService implements IRecoverService {
         recoverMailSender.send(account);
 
         log.info("Запрошен сброс пароля для пользователя {}", account.getEmail());
-        return new SimpleResponseDto(true, "OK");
+        return new SimpleResponseDto(true);
     }
 
     @Override
@@ -48,16 +48,16 @@ public class RecoverService implements IRecoverService {
         AccountConfirmation accountConfirmation = recoverConfirmationDataAccess.findByCode(recoverRequestDto.getCode());
         if (accountConfirmation == null) {
             log.warn("Ключ активации {} отсутсвует", recoverRequestDto.getCode());
-            return new SimpleResponseDto(false, "Неверный код подтверждения");
+            return new SimpleResponseDto(404, "Неверный код подтверждения");
         }
         if (!recoverRequestDto.getPassword().equals(recoverRequestDto.getPasswordConfirm())) {
             log.warn("Не совпадают пароли для пользователя с кодом подтверждения {}", recoverRequestDto.getCode());
-            return new SimpleResponseDto(false, "Не совпадают пароли");
+            return new SimpleResponseDto(400, "Не совпадают пароли");
         }
         Account account = recoverAccountDataAccess.findById(accountConfirmation.getId());
         account.setPassword(passwordEncoder.encode(recoverRequestDto.getPassword()));
         recoverAccountDataAccess.update(account);
         log.info("Произведен сброс пароля для аккаунта {}", account.getEmail());
-        return new SimpleResponseDto(true, "OK");
+        return new SimpleResponseDto(true);
     }
 }

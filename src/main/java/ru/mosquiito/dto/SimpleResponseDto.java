@@ -8,6 +8,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class SimpleResponseDto {
-    boolean status;
-    String message;
+    private boolean status;
+    private Integer code;
+    private String message;
+
+    public SimpleResponseDto(boolean status) {
+        this.status = status;
+    }
+
+    public SimpleResponseDto(Integer code, String message) {
+        this.status=false;
+        this.code = code;
+        this.message = message;
+    }
 }

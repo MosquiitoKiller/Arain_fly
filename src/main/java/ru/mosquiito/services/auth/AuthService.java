@@ -47,11 +47,11 @@ public class AuthService implements IRegistrationService, ILoginService {
     public SimpleResponseDto registration(RegistrationDto registrationDto) {
         if (!registrationDto.getPassword().equals(registrationDto.getConfirmPassword())) {
             log.warn("Не удалось зарегистрировать пользователя {}, пароли не совпадают", registrationDto.getEmail());
-            return new SimpleResponseDto(false, "Пароли не совпадают");
+            return new SimpleResponseDto(400,"Пароли не совпадают");
         }
         if (accountDataAccess.findByEmail(registrationDto.getEmail()) != null) {
             log.warn("Пользователь с почтой {} уже существует", registrationDto.getEmail());
-            return new SimpleResponseDto(false, "Пользователь с почтой " + registrationDto.getEmail() + " уже существует");
+            return new SimpleResponseDto( 400, "Пользователь с почтой " + registrationDto.getEmail() + " уже существует");
         }
         Account account = new Account(registrationDto.getEmail(),
                 encoder.encode(registrationDto.getPassword()),
@@ -62,7 +62,7 @@ public class AuthService implements IRegistrationService, ILoginService {
         account.setAccountConfirmation(accountConfirmation);
         accountDataAccess.save(account);
         mailSender.send(account);
-        return new SimpleResponseDto(true, "OK");
+        return new SimpleResponseDto(true);
     }
 
     @Override

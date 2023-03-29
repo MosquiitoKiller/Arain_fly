@@ -26,7 +26,7 @@ dependencies {
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation('jakarta.persistence:jakarta.persistence-api:3.1.0')
 
-    implementation 'org.postgresql:postgresql:42.5.0'
+    implementation 'org.postgresql:postgresql:42.5.1'
     implementation 'io.micronaut.data:micronaut-data-hibernate-jpa:3.8.1'
 
     // security
@@ -38,7 +38,7 @@ dependencies {
 
 
     // transactional annotation
-    implementation("io.micronaut.spring:micronaut-spring")
+    implementation 'io.micronaut:micronaut-spring:2.0.1'
 
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 

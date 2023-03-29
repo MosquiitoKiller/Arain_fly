@@ -5,9 +5,10 @@ import ru.mosquiito.domain.Account;
 import ru.mosquiito.repositories.AccountRepository;
 import ru.mosquiito.services.accountConfirmation.AccountDataAccess;
 import ru.mosquiito.services.auth.AuthAccountDataAccess;
+import ru.mosquiito.services.order.OrderAccountDataAccess;
 import ru.mosquiito.services.recover.RecoverAccountDataAccess;
 
-public class AccountData implements AuthAccountDataAccess, AccountDataAccess, RecoverAccountDataAccess {
+public class AccountData implements AuthAccountDataAccess, AccountDataAccess, RecoverAccountDataAccess, OrderAccountDataAccess {
 
     @Inject
     private AccountRepository accountRepository;

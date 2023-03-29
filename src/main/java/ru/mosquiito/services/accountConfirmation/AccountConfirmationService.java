@@ -36,21 +36,21 @@ public class AccountConfirmationService implements ICreateConfirmationService, I
         AccountConfirmation accountConfirmation = accountConfirmationDataAccess.findByCode(code);
         if (accountConfirmation == null) {
             log.warn("Ключ активации {} отсутсвует", code);
-            return new SimpleResponseDto(false, "Некорректный код подтверждения");
+            return new SimpleResponseDto(404, "Некорректный код подтверждения");
         }
         Account account = accountDataAccess.findById(accountConfirmation.getId());
         if (account == null) {
             log.warn("Не найден аккаунт для кода подтверждения {}", code);
-            return new SimpleResponseDto(false, "Не найден аккаунт");
+            return new SimpleResponseDto(404, "Не найден аккаунт");
         }
         if (account.getAccountStatus() == AccountStatus.INACTIVE) {
-            return new SimpleResponseDto(false, "Аккаунт заблокирован");
+            return new SimpleResponseDto(403, "Аккаунт заблокирован");
         }
 
         account.setAccountStatus(AccountStatus.ACTIVE);
         accountDataAccess.update(account);
         log.info("Пользователь {} успешно подтвержден", account.getEmail());
-        return new SimpleResponseDto(true, "Аккаунт успешно подтвержден");
+        return new SimpleResponseDto(true);
     }
 
     @Override
