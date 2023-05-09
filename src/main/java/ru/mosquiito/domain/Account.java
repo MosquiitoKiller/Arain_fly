@@ -36,10 +36,10 @@ public class Account {
     @Column(name = "create_date")
     private Date createDate;
 
-    @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(name="account_roles",
-            joinColumns = {@JoinColumn(name="account_id", referencedColumnName="id")},
-            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "account_roles",
+            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private List<Role> roles;
 

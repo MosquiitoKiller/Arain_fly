@@ -3,11 +3,13 @@ VALUES (1, 'Russia'),
        (2, 'France');
 insert into city(id, name, country_id)
 VALUES (1, 'Moscow', 1),
-       (2, 'Spb', 1);
-insert into hotel(id, name, city_id, stars, beds, wifi, card_payment, pool, adapted_for_disabled)
-VALUES (1, 'best', 1, 5, 2, true, true, true, true);
+       (2, 'Spb', 1),
+(3,'Paris',2);
 
-insert into tour(id, name, price, free_places, hotel_id, start_city, start_date, end_date, active) VALUES (1,'btour',1,10,1,1,'2022-08-26 12:28:14.621000', '2022-08-26 12:28:14.621000',true);
+insert into tour(id, name, price, free_places, start_city, start_date, end_date, active) VALUES (1,'btour',1,10,1,'2022-08-26 12:28:14.621000', '2022-08-26 12:28:14.621000',true);
+
+insert into hotel(id, tour_id, name, city_id, stars, beds, wifi, card_payment, pool, adapted_for_disabled)
+VALUES (1, 1, 'best', 1, 5, 2, true, true, true, true);
 
 insert into account_confirmation(id, code) VALUES (9000, 'sdfs');
 

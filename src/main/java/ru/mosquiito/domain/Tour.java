@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,8 +25,8 @@ public class Tour {
     @Column(name = "free_places")
     private Integer freePlaces;
 
-    @ManyToOne
-    private Hotel hotel;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Hotel> hotels;
 
     @OneToOne
     @JoinColumn(name = "start_city")

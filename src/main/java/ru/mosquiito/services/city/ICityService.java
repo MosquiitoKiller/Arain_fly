@@ -7,4 +7,5 @@ import java.util.List;
 public interface ICityService {
     List<CityDto> getAll();
     CityDto getById(Long id);
+    List<CityDto> getAllByCountry(Long countryId);
 }

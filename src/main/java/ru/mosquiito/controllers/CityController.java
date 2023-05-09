@@ -12,7 +12,7 @@ import ru.mosquiito.services.city.ICityService;
 import java.util.List;
 
 @Controller("/city")
-@Secured(SecurityRule.IS_AUTHENTICATED)
+@Secured(SecurityRule.IS_ANONYMOUS)
 public class CityController {
 
     @Inject
@@ -26,5 +26,10 @@ public class CityController {
     @Get("/{id}")
     public CityDto getById(@PathVariable Long id) {
         return cityService.getById(id);
+    }
+
+    @Get("/byCountry/{id}")
+    public List<CityDto> getAllByCountry(@PathVariable Long id) {
+        return cityService.getAllByCountry(id);
     }
 }

@@ -46,9 +46,22 @@ create table if not exists city
     country_id integer references country (id) not null
 );
 
+create table if not exists tour
+(
+    id          serial primary key,
+    name        varchar(128)                 not null,
+    price       double precision             not null,
+    free_places integer                      not null,
+    start_city  integer references city (id) not null,
+    start_date  timestamp                    not null,
+    end_date    timestamp                    not null,
+    active      boolean                      not null
+);
+
 create table if not exists hotel
 (
     id                   serial primary key,
+    tour_id              integer references tour (id) not null,
     name                 varchar(128)                 not null,
     city_id              integer references city (id) not null,
     stars                smallint                     not null,
@@ -57,19 +70,6 @@ create table if not exists hotel
     card_payment         boolean                      not null,
     pool                 boolean                      not null,
     adapted_for_disabled boolean                      not null
-);
-
-create table if not exists tour
-(
-    id          serial primary key,
-    name        varchar(128)                  not null,
-    price       double precision              not null,
-    free_places integer                       not null,
-    hotel_id    integer references hotel (id) not null,
-    start_city  integer references city (id)  not null,
-    start_date  timestamp                     not null,
-    end_date    timestamp                     not null,
-    active      boolean                       not null
 );
 
 create table if not exists public.orders
