@@ -17,7 +17,7 @@ public class AccountConfirmationData implements AccountConfirmationDataAccess, R
     }
 
     @Override
-    public AccountConfirmation findById(Integer id) {
+    public AccountConfirmation findById(Long id) {
         return accountConfirmationRepository.findById(id).orElse(null);
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class AccountConfirmation {
     @Id
-    private Integer id;
+    private Long id;
 
     private String code;
 

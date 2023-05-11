@@ -7,6 +7,6 @@ import ru.mosquiito.domain.Account;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Integer> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByEmailIgnoreCase(String email);
 }

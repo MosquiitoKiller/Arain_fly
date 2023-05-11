@@ -19,7 +19,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accountSeq")
     @SequenceGenerator(name = "accountSeq", sequenceName = "account_autoinc", allocationSize = 1)
-    private Integer id;
+    private Long id;
 
     @Column(name = "email")
     private String email;

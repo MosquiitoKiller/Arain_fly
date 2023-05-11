@@ -5,5 +5,5 @@ import ru.mosquiito.domain.Account;
 public interface RecoverAccountDataAccess {
     Account findByEmail(String email);
     Account update(Account account);
-    Account findById(Integer id);
+    Account findById(Long id);
 }

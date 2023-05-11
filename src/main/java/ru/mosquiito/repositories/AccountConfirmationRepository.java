@@ -7,6 +7,6 @@ import ru.mosquiito.domain.AccountConfirmation;
 import java.util.Optional;
 
 @Repository
-public interface AccountConfirmationRepository extends JpaRepository<AccountConfirmation, Integer> {
+public interface AccountConfirmationRepository extends JpaRepository<AccountConfirmation, Long> {
     Optional<AccountConfirmation> findByCode(String code);
 }

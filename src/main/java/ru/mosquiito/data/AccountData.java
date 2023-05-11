@@ -4,11 +4,14 @@ import jakarta.inject.Inject;
 import ru.mosquiito.domain.Account;
 import ru.mosquiito.repositories.AccountRepository;
 import ru.mosquiito.services.accountConfirmation.AccountDataAccess;
+import ru.mosquiito.services.admin.AdminAccountDataAccess;
 import ru.mosquiito.services.auth.AuthAccountDataAccess;
 import ru.mosquiito.services.order.OrderAccountDataAccess;
 import ru.mosquiito.services.recover.RecoverAccountDataAccess;
 
-public class AccountData implements AuthAccountDataAccess, AccountDataAccess, RecoverAccountDataAccess, OrderAccountDataAccess {
+import java.util.List;
+
+public class AccountData implements AuthAccountDataAccess, AccountDataAccess, RecoverAccountDataAccess, OrderAccountDataAccess, AdminAccountDataAccess {
 
     @Inject
     private AccountRepository accountRepository;
@@ -24,8 +27,13 @@ public class AccountData implements AuthAccountDataAccess, AccountDataAccess, Re
     }
 
     @Override
-    public Account findById(Integer id) {
+    public Account findById(Long id) {
         return accountRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Account> getAll() {
+        return accountRepository.findAll();
     }
 
     @Override
